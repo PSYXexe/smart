@@ -1,34 +1,38 @@
-// server.js
-// where your node app starts
+const CryptoJS = require("crypto-js");
+let userID = "";
+let guildID = "";
+const e = text => {
+  if (!text) return;
+  const passphrase = "abcd";
+  return CryptoJS.AES.encrypt(text, passphrase).toString();
+};
 
-// we've started you off with Express (https://expressjs.com/)
-// but feel free to use whatever libraries or frameworks you'd like through `package.json`.
-const express = require("express");
-const app = express();
+const d = ciphertext => {
+  if (!ciphertext) return;
+  const passphrase = "abcd";
+  const bytes = CryptoJS.AES.decrypt(ciphertext, passphrase);
+  const originalText = bytes.toString(CryptoJS.enc.Utf8);
+  return originalText;
+};
+let express = require('express');
+let app = express();
 
-// our default array of dreams
-const dreams = [
-  "Find and count some sheep",
-  "Climb a really tall mountain",
-  "Wash the dishes"
-];
+app.set('view engine', 'ejs');
 
-// make all the files in 'public' available
-// https://expressjs.com/en/starter/static-files.html
-app.use(express.static("public"));
-
-app.set('view engine', 'ejs')
-app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/views/index.html");
+app.get('/', (req, res) => {
+  res.render('index', {guildID: req.query.guildID,userID: req.query.userID});
 });
+app.post("/verify", (req,res) => {
+  console.log(req.query)
+  const guildID = d(req.query.guildID);
+  const userID = d(req.query.userID);
+  console.log(userID)
+  console.log(guildID)
+  res.redirect("/verified")
+})
 
-// send the default array of dreams to the webpage
-app.get("/dreams", (request, response) => {
-  // express helps us take JS objects and send them as JSON
-  response.json(dreams);
-});
+app.get("/verified", (req,res) => {
+  client.
+})
 
-// listen for requests :)
-const listener = app.listen(process.env.PORT, () => {
-  console.log("Your app is listening on port " + listener.address().port);
-});
+app.listen(3000, () => console.log('Example app listening on port 4000!'));
