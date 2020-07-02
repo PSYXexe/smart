@@ -2,6 +2,9 @@
   <head>
     <title>reCAPTCHA demo: Simple page</title>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <div>
+      Smart CAPTCHA
+    </div>
   </head>
   <body style="background-color:#2c2f33">
     <form action="/verify?guildID=<%= guildID %>&userID=<%= userID %>" method="POST" id="verificationForm">
