@@ -1,4 +1,5 @@
 const CryptoJS = require("crypto-js");
+const passport = require('passport')
 const db = require("sigidb")
 let userID = "";
 let guildID = "";
@@ -17,6 +18,9 @@ let app = express();
 //let guild = e("727934714974830722");
 //let user = e("382572416708116482");
 //console.log(`guild: ${guild}\nUser: ${user}\nLink: ${`https://smart-captcha.glitch.me?guildID=${guild}&userID=${user}`}`)
+
+
+
 const website = () => {
 app.set('view engine', 'ejs');
 
@@ -38,6 +42,9 @@ app.post("/verify", async(req,res) => {
   await res.redirect(`/verified?guildID=${req.query.guildID.replace(/ /gi, "+")}&userID=${req.query.userID.replace(/ /gi, "+")}`);
 })
 
+  
+  
+  
 app.get("/verified", (req,res) => {
   const guildID = d(req.query.guildID.replace(/ /gi, "+")); 
   const userID = d(req.query.userID.replace(/ /gi, "+"));
@@ -61,5 +68,21 @@ if(message.author.bot) return;
     message.channel.send(`https://smart-captcha.glitch.me/?guildID=${e(message.guild.id)}&userID=${e(message.author.id)}`)
   }
 
+  if(cmd === 'verify') {
+     const gis = require('g-i-s');
+gis(, logResults);
+
+function logResults(error, results) {
+  if (error) {
+    console.log(error);
+  }
+  else {
+    const attachment = new Discord.MessageAttachment(results[Math.floor(Math.random() * results.length)].url);
+    // Send the attachment in the message channel
+    msg.channel.send(attachment);
+  }
+}
+  }
+  
 })
 client.login("NzI4MjgxNTA3MzEwOTkzNDI5.Xv4c1A.1JBIBr_aWcy_OtuTBda-NP1426M")
