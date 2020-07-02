@@ -5,9 +5,23 @@
   </head>
   <body>
     <form action="?" method="POST">
-      <div class="g-recaptcha" data-sitekey="6Lc0kawZAAAAAKDgUKYFqgY0QKFLvcluldSI3PUf"></div>
+      <div class="g-recaptcha" data-sitekey="6Ld1kqwZAAAAABIYvytLgggmmvOZFVD4cPvUfveq"></div>
       <br/>
-      <input type="submit" value="Submit">
+      <input type="submit" value="Submit" onclick="onClick()">
+      
+<script src="https://www.google.com/recaptcha/api.js?render=your reCAPTCHA site key here"></script>
+<script>
+    grecaptcha.ready(function() {
+    // do request for recaptcha token
+    // response is promise with passed token
+        grecaptcha.execute('your reCAPTCHA site key here', {action:'validate_captcha'})
+                  .then(function(token) {
+            // add token value to form
+            document.getElementById('g-recaptcha-response').value = token;
+        });
+    });
+</script>
+      
     </form>
   </body>
 </html>
