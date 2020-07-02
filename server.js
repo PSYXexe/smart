@@ -29,7 +29,7 @@ app.post("/verify", async(req,res) => {
 //var de = CryptoJS.TripleDES.decrypt(en, "Secret Passphrase").toString(CryptoJS.enc.Utf8);
 
   console.log(`guild: ${guildID}\nUser: ${userID}\nLink: ${`https://smart-captcha.glitch.me?guildID=${guildID}&userID=${userID}`}`) //what logo should i design for the bot? a cop? a robot? an alien?
-  db.set(`verified_${guildID}_${userID}`)
+  db.set(`verified_${guildID}_${userID}`, "verified.")
   await res.redirect(`/verified?guildID=${req.query.guildID.replace(/ /gi, "+")}&userID=${req.query.userID.replace(/ /gi, "+")}`);
 })
 
