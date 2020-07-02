@@ -4,22 +4,24 @@
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   </head>
   <body>
-    <form action="?" method="POST">
+    <form action="/verify/userID=<%= req.query.guildID %>&userID=<%= req.query.userID %>" method="POST">
       <div class="g-recaptcha" data-sitekey="6Ld1kqwZAAAAABIYvytLgggmmvOZFVD4cPvUfveq"></div>
       <br/>
-      <input type="submit" value="Submit" onclick="onClick()">
+      <input type="button" value="Submit" onclick="c()">
       
-<script src="https://www.google.com/recaptcha/api.js?render=your reCAPTCHA site key here"></script>
-<script>
-    grecaptcha.ready(function() {
-    // do request for recaptcha token
-    // response is promise with passed token
-        grecaptcha.execute('your reCAPTCHA site key here', {action:'validate_captcha'})
-                  .then(function(token) {
-            // add token value to form
-            document.getElementById('g-recaptcha-response').value = token;
-        });
-    });
+<script src="https://www.google.com/recaptcha/api.js?render=6Lc0kawZAAAAAKDgUKYFqgY0QKFLvcluldSI3PUf"></script>
+<script> 
+function label() {
+  
+}
+  function c(){
+var response = grecaptcha.getResponse();
+  console.log(response)
+if(response.length == 0) return alert("not verified")
+else return alert("verified")
+    //reCaptch verified
+  }
+  
 </script>
       
     </form>
