@@ -1,5 +1,5 @@
 const CryptoJS = require("crypto-js");
-const passport = require('passport')
+const {MessageAttachment} = require('discord.js')
 const db = require("sigidb")
 let userID = "";
 let guildID = "";
@@ -12,6 +12,8 @@ const d = cyphertext => { //lol sypher
   return CryptoJS.TripleDES.decrypt(cyphertext, "Secret Passphrase").toString(CryptoJS.enc.Utf8);
 };
 const Discord = require("discord.js");
+const {MessageEmbed: embed} = require("discord.js");
+
 const client = new Discord.Client();
 let express = require('express');
 let app = express();
@@ -69,19 +71,95 @@ if(message.author.bot) return;
   }
 
   if(cmd === 'verify') {
-     const gis = require('g-i-s');
-gis(, logResults);
 
-function logResults(error, results) {
-  if (error) {
-    console.log(error);
-  }
-  else {
-    const attachment = new Discord.MessageAttachment(results[Math.floor(Math.random() * results.length)].url);
-    // Send the attachment in the message channel
-    msg.channel.send(attachment);
-  }
+async function generate() {
+  const am = require("random-animals-apis");
+
+let e = await msg.channel.send(new embed()
+.setColor('BLUE')
+.setDescription('**Generating CAPTCHA**\nPlease wait. <a:loading:728501325364723733>'))
+const Canvas = require('canvas')
+const canvas = Canvas.createCanvas(700, 699);
+const ctx = canvas.getContext('2d');
+
+    const one = await Canvas.loadImage(await am.getRandomBirdImage());
+    // // ctx.drawImage(one, 0, 0, 233, 233);
+
+
+const two = await Canvas.loadImage(await am.getRandomBirdImage());
+// ctx.drawImage(two, 0, 233, 233, 233);
+
+const th = await Canvas.loadImage(await am.getRandomBirdImage());
+// ctx.drawImage(th, 0, 466, 233, 233);
+
+const fo = await Canvas.loadImage(await am.getRandomBirdImage());
+// ctx.drawImage(fo, 233, 0, 233, 233);
+
+const fi = await Canvas.loadImage(await am.getRandomBirdImage());
+// ctx.drawImage(fi, 233, 233, 233, 233);
+
+const six = await Canvas.loadImage(await am.getRandomBirdImage());
+// ctx.drawImage(six, 466, 233, 233, 233);
+
+const sev = await Canvas.loadImage(await am.getRandomBirdImage());
+// ctx.drawImage(sev, 466, 0, 233, 233);
+
+const eight = await Canvas.loadImage(await am.getRandomBirdImage());
+// ctx.drawImage(eight, 233, 466, 233, 233);
+
+const nine = await Canvas.loadImage(await am.getRandomBirdImage());
+ //ctx.drawImage(nine, 466, 466, 233, 233);
+    const numObj = {
+      "1" : "ctx.drawImage(one, 0, 0, 233, 233)",
+      "2" : "ctx.drawImage(two, 233, 0, 233, 233)",
+      "3" : "ctx.drawImage(th, 466, 0, 233, 233)",
+      "4" : "ctx.drawImage(fo, 0, 233, 233, 233)",
+      "5" : "ctx.drawImage(fi, 233, 233, 233, 233)",
+      "6" : "ctx.drawImage(six, 466, 233, 233, 233)",
+      "7" : "ctx.drawImage(sev, 0, 466, 233, 233)",
+      "8" : "ctx.drawImage(eight, 233, 466, 233, 233)",
+      "9" : "ctx.drawImage(nine, 466, 466, 233, 233)"
+    }
+    //ctx.drawImage(sev, 0, 466, 233, 233)
+                let rights = "";
+    let times = Math.floor(Math.random() * Math.floor(3) + 2);
+    var i;
+    var array = [1,2,3,4,5,6]
+
+    for (i = 0; i < times; i++) {
+      const { inspect } = require("util")
+
+      let rand = Math.floor(Math.random() * array.length + 1);;
+       console.log(rand) 
+
+      let evaluated = inspect(eval(numObj[rand.toString()], { depth: 0 }));
+
+      console.log("s" , numObj[rand.toString()])
+      delete numObj[rand.toString()]
+      delete array[rand - 1]
+      rights += `&&${rand}`
+      
+    }
+    const collector = message.channel.createMessageCollector(m => m.author == msg.author);
+    console.log(rights)
+    collector.on('collect', m => {
+    if(Array.from(m.content.match(/[0-9]/g)).sort().join('') === rights.split('&&').sort().join('')) {
+      m.reply('correct')
+    }else{
+      m.reply('wrong')
+    }
+    });
+    
+
+
+const background = await Canvas.loadImage('https://i.imgur.com/kJRwFdg.png')
+ ctx.drawImage(background, 0, 0, canvas.height, canvas.width)
+  const a = new Discord.MessageAttachment(canvas.toBuffer(), 'captcha.png');
+message.channel.send(a).then(await e.delete())
+
 }
+generate()
+
   }
   
 })
